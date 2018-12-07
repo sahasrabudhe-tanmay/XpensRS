@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xpens.model.Day;
+import com.xpens.model.ResponseStatus;
 import com.xpens.response.ResponseBuilder;
 import com.xpens.service.DayService;
 
@@ -37,8 +38,12 @@ public class DayController {
 	}
 	
 	@PostMapping("/day")
-	public void postDay(@RequestBody Day day) {
+	public ResponseEntity<ResponseStatus> postDay(@RequestBody Day day) {
 		dayService.postDay(day);
+		
+		ResponseBuilder response = new ResponseBuilder();
+		
+		return response.buildPostResponse();
 	}
 
 }
