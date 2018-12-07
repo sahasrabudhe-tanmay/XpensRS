@@ -3,6 +3,7 @@ package com.xpens.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xpens.model.Day;
+import com.xpens.response.ResponseBuilder;
 import com.xpens.service.DayService;
 
 @RestController
@@ -26,8 +28,12 @@ public class DayController {
 	}
 	
 	@GetMapping("/day/{id}")
-	public Day getDay(@PathVariable String id) {
-		return dayService.getDay(id);
+	public ResponseEntity<Day> getDay(@PathVariable String id) {
+		Day day = dayService.getDay(id);
+		
+		ResponseBuilder response = new ResponseBuilder();
+		
+		return response.buildResponse(day);
 	}
 	
 	@PostMapping("/day")
